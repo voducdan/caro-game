@@ -7,6 +7,7 @@
 #include<stdio.h>
 #include <dos.h>
 #include<conio.h>
+#include<vector>
 #include<string>
 using namespace std;
 
@@ -31,6 +32,7 @@ public:
 	char askSave();
 	void saveGame();
 	void loadGame();
+	void playAfterLoad();
 	void play();
 public:
 	int processFinish();

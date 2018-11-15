@@ -38,7 +38,7 @@ void _Game::exitGame() {
 }
 char _Game::askSave() {
 	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 1);
-	cout << "Save this game for the next visit, press l to save";
+	cout << "Save this game for the next visit, press Y to save";
 	waitKeyBoard();
 	return getCommand();
 }
@@ -59,31 +59,112 @@ void _Game::saveGame() {
 	}
 	fclose(f);
 }
-
+int countX = 0;
+int countO = 0;
 void _Game::loadGame() {
+	vector<int> data;
 	char name[30];
-	_b->drawBoard();
+	_Board::TextColor(14);
 	cout << "Your name: ";
 	gets_s(name);
 	char fileName[10] = ".txt";
 	strcat(name, fileName);
 	cout << name << endl;
+	system("cls");
 	FILE *f = fopen(name, "rb");
-	if (f == NULL) { cout << "Khong tim thay ten nguoi choi"; return; }
+	if (f == NULL) { 
+		cout << "Khong tim thay ten nguoi choi";
+		Sleep(2000);
+		system("cls");
+		play(); 
+	}
 	int j = 0;
+	int i = 0;
 	int a;
+	while (!feof(f)) {
+		fscanf(f, "%d", &a);
+		data.push_back(a);
+	}
+	_b->resetData();
+	_b->drawBoard();
+	int getdata = 0;
 	for (int i = 0; i < _b->getSize(); i++)
 	{
-		while(!feof(f)&&j<_b->getSize()){
-			fscanf(f, "%d", &a);
-			_Common::gotoXY(_b->getXAt(i, j), _b->getYAt(i, j));
-			_b->setCheckAt(i, j, a);
-			processCheckBoard();
-			j++;
+		for (int j = 0; j < _b->getSize(); j++)
+		{
+			int x = _b->getXAt(i, j);
+			int y = _b->getYAt(i, j);
+			_Common::gotoXY(x, y);
+			if (data[getdata] == -1) {
+				_b->TextColor(12);
+				cout << "X";
+				countX++;
+				_Common::_Common::gotoXY(7, 3);
+				cout << countX;
+				_Common::_Common::gotoXY(71, 3);
+				cout << "O";
+				_b->setCheckAt(i, j, a);
+			}
+			if (data[getdata] == 1) {
+				_b->TextColor(10);
+				cout << "O";
+				countO++;
+				_Common::_Common::gotoXY(15, 3);
+				cout << countO;
+				_Common::_Common::gotoXY(71, 3);
+				cout << "X";
+				_b->setCheckAt(i, j, a);
+			}
+			getdata++;
 		}
 	}
 	_x = _b->getXAt(0, 0);
 	_y = _b->getYAt(0, 0);
+	_Common::gotoXY(_x, _y);
+}
+int _Board::countO = 0;
+int _Board::countX = 0;
+void _Game::playAfterLoad() {
+	loadGame();
+	_Board::countO = countO;
+	_Board::countX = countX;
+	while (isContinue()) {
+		waitKeyBoard();
+		if (getCommand() == 27) {
+			if (askSave() == 'Y') {
+				saveGame();
+				exitGame();
+			}
+			else exitGame();
+		}
+		else {
+			switch (getCommand()) {
+			case 65:case 75:
+				moveLeft();
+				break;
+			case 87:case 72:
+				moveUp();
+				break;
+			case 68: case 77:
+				moveRight();
+				break;
+			case 83:case 80:
+				moveDown();
+				break;
+			case 13:
+				if (processCheckBoard()) {
+					switch (processFinish()) {
+					case 1: case -1: case 0:
+						if (askContinue() != 'Y') exitGame();
+						else startGame();
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
 }
 bool _Game::processCheckBoard() {
 	switch (_b->checkBoard(_x, _y, _turn)){
@@ -204,16 +285,16 @@ void _Game::play() {
 			}
 			else {
 				switch (getCommand()) {
-				case 65:
+				case 65:case 75:
 					moveLeft();
 					break;
-				case 87:
+				case 87:case 72:
 					moveUp();
 					break;
-				case 68:
+				case 68:case 77:
 					moveRight();
 					break;
-				case 83:
+				case 83:case 80:
 					moveDown();
 					break;
 				case 13:
@@ -229,8 +310,9 @@ void _Game::play() {
 				}
 			}
 		}
+		break;
 	case 14:
-		loadGame();
+		playAfterLoad();
 		break;
 	}
 }

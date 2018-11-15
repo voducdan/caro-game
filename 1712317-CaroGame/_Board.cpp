@@ -50,7 +50,8 @@ void _Board::drawBoard() {
 	//	}
 	//}
 
-	_Common::_Common::_Common::gotoXY(_pArr[0][0].GetX(), _pArr[0][0].GetY());
+	_Common::gotoXY(_pArr[0][0].GetX(), _pArr[0][0].GetY());
+	
 	//ban co
 	//ngang
 	for (int i = _left+1; i <= _left + 4 * _size; i++)
@@ -183,23 +184,23 @@ void _Board::drawBoard() {
 	}*/
 	_Common::_Common::gotoXY(17, 4); printf("%c", 188);
 
-	_Common::_Common::gotoXY(34, 0); TextColor(160); printf(" GAME CO CARO ");
-	_Common::_Common::gotoXY(20, 2); TextColor(9); printf("## ##      ##    ##    ##   ##   ##   ###\n");
-	_Common::_Common::gotoXY(20, 3); TextColor(9); printf("##   ##  ## ##   ## ## ##    ## ##  ##   ##\n");
-	_Common::_Common::gotoXY(20, 4); TextColor(9); printf("## ##   ##   ##  ##    ##     ##      ###\n");
-	_Common::_Common::gotoXY(5, 2); TextColor(12); printf("So Quan Co");
+	_Common::gotoXY(34, 0); TextColor(160); printf(" GAME CO CARO ");
+	_Common::gotoXY(20, 2); TextColor(9); printf("## ##      ##    ##    ##   ##   ##   ###\n");
+	_Common::gotoXY(20, 3); TextColor(9); printf("##   ##  ## ##   ## ## ##    ## ##  ##   ##\n");
+	_Common::gotoXY(20, 4); TextColor(9); printf("## ##   ##   ##  ##    ##     ##      ###\n");
+	_Common::gotoXY(5, 2); TextColor(12); printf("So Quan Co");
 	TextColor(15);
-	_Common::_Common::gotoXY(3, 3); printf("  -   |   -   ");
-	_Common::_Common::gotoXY(3, 3); TextColor(14); printf("X");
-	_Common::_Common::gotoXY(11, 3); TextColor(14); printf("O");
-	_Common::_Common::_Common::gotoXY(_pArr[0][0].GetX(), _pArr[0][0].GetY());
+	_Common::gotoXY(3, 3); printf("  -   |   -   ");
+	_Common::gotoXY(3, 3); TextColor(14); printf("X");
+	_Common::gotoXY(11, 3); TextColor(14); printf("O");
+	_Common::gotoXY(_pArr[0][0].GetX(), _pArr[0][0].GetY());
+	//cout << _pArr[0][0].GetX() << " " << _pArr[0][0].GetY();
 }
-int countX = 0;
-int countO = 0;
-int _Board::checkBoard(int x, int y, int turn) {
 
+int _Board::checkBoard(int x, int y, int turn) {
 	for (int i = 0; i < _size; i++) {
 		for (int j = 0; j < _size; j++) {
+
 			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y && _pArr[i][j].GetCheck() == 0) {
 				if (turn)
 				{	
@@ -403,8 +404,10 @@ int _Board::drawInterface() {
 		else if (a == 72 || a == 'w' || a == 'W' || a == '8') chon = 2;
 		else if (a == 13 || a == 'e' || a == 'e' || a == '5') chon = 3;
 		else chon = 0;
-		if (chon == 1 && toado < 16) toado++;
-		else if (chon == 2 && toado > 13) toado--;
+		if (chon == 1 && toado <= 16) toado++;
+		if (chon == 2 && toado >= 13) toado--;
+		if (chon == 1 && toado > 16) toado = 13;
+		if (chon == 2 && toado < 13) toado = 16;
 		if (toado == 13)
 		{
 			TextColor(202);

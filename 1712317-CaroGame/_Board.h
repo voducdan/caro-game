@@ -20,6 +20,8 @@ public:
 	int getXAt(int, int);
 	int getYAt(int, int);
 	void setCheckAt(int, int, int);
+	static int countX;
+	static int countO;
 	_Board(int,int,int);
 	~_Board();
 	void resetData();
