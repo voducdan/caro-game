@@ -8,7 +8,9 @@
 #include <dos.h>
 #include<conio.h>
 #include<vector>
+#include<time.h>
 #include<string>
+#include<sstream>
 using namespace std;
 
 class _Game {
@@ -33,7 +35,11 @@ public:
 	void saveGame();
 	void loadGame();
 	void playAfterLoad();
+	void botPlay();
+	void humanPlay();
+	void help();
 	void play();
+	void moveAndChoose();
 public:
 	int processFinish();
 	bool processCheckBoard();

@@ -14,13 +14,13 @@ int _Game::getCommand() {
 }
 bool _Game::isContinue() { return _loop; }
 char _Game::waitKeyBoard() {
-	_command = toupper(_getch());
+	_command = toupper(_getwch());
 	return _command;
 }
 char _Game::askContinue() {
-	_Common::gotoXY(_b->getLeft()+5, _b->getTop()-2);
+	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 2);
 	cout << "Do you want to play again? ";
-	_Common::gotoXY(_b->getLeft()+5, _b->getTop() - 1);
+	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 1);
 	waitKeyBoard();
 	return getCommand();
 }
@@ -37,14 +37,16 @@ void _Game::exitGame() {
 	_loop = false;
 }
 char _Game::askSave() {
-	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 1);
+	_Common::gotoXY(_b->getLeft(), _b->getTop() - 1);
 	cout << "Save this game for the next visit, press Y to save";
 	waitKeyBoard();
 	return getCommand();
 }
+
+
 void _Game::saveGame() {
 	char name[30];
-	_Common::gotoXY(_b->getLeft() + _b->getSize()*4+2, _b->getTop()+2);
+	_Common::gotoXY(_b->getLeft() + _b->getSize() * 4 + 2, _b->getTop() + 2);
 	cout << "Your name: ";
 	gets_s(name);
 	char fileName[40] = ".txt";
@@ -53,8 +55,8 @@ void _Game::saveGame() {
 	for (int i = 0; i < _b->getSize(); i++) {
 		for (int j = 0; j < _b->getSize(); j++)
 		{
-			fprintf(f, "%d",_b->getCheckAt(i,j));
-			fprintf(f,"\n");
+			fprintf(f, "%d", _b->getCheckAt(i, j));
+			fprintf(f, "\n");
 		}
 	}
 	fclose(f);
@@ -72,11 +74,11 @@ void _Game::loadGame() {
 	cout << name << endl;
 	system("cls");
 	FILE *f = fopen(name, "rb");
-	if (f == NULL) { 
+	if (f == NULL) {
 		cout << "Khong tim thay ten nguoi choi";
 		Sleep(2000);
 		system("cls");
-		play(); 
+		play();
 	}
 	int j = 0;
 	int i = 0;
@@ -103,7 +105,7 @@ void _Game::loadGame() {
 				cout << countX;
 				_Common::_Common::gotoXY(71, 3);
 				cout << "O";
-				_b->setCheckAt(i, j, a);
+				_b->setCheckAt(i, j, data[getdata]);
 			}
 			if (data[getdata] == 1) {
 				_b->TextColor(10);
@@ -113,7 +115,7 @@ void _Game::loadGame() {
 				cout << countO;
 				_Common::_Common::gotoXY(71, 3);
 				cout << "X";
-				_b->setCheckAt(i, j, a);
+				_b->setCheckAt(i, j, data[getdata]);
 			}
 			getdata++;
 		}
@@ -164,10 +166,9 @@ void _Game::playAfterLoad() {
 			}
 		}
 	}
-
 }
 bool _Game::processCheckBoard() {
-	switch (_b->checkBoard(_x, _y, _turn)){
+	switch (_b->checkBoard(_x, _y, _turn)) {
 	case -1:
 		_Board::TextColor(12);
 		cout << "X";
@@ -183,8 +184,8 @@ bool _Game::processCheckBoard() {
 }
 int _Game::processFinish() {
 
-	_Common::gotoXY(_b->getLeft()*4+5,_b->getTop());
-	int pWhoWin = _b->testBoard(_x,_y);
+	_Common::gotoXY(_b->getLeft() * 4 + 5, _b->getTop());
+	int pWhoWin = _b->testBoard(_x, _y);
 	int i = 1;
 	switch (pWhoWin) {
 	case -1:
@@ -202,25 +203,25 @@ int _Game::processFinish() {
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 5); _cprintf("####  ###  ####  ###  ####    ##  ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 6); _cprintf("#### ## ## #### ##### ####     ## ####");
 			Sleep(60);
-		} while (i<15);
+		} while (i < 15);
 		PlaySound(TEXT("votay.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		break;
 	case 1:
 		do {
 			_Board::TextColor(i++);
-			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop()-5); _cprintf("    #########    ");
-			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop()-4); _cprintf(" ####       #### ");
-			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop()-3); _cprintf("####         ####");
-			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop()-2); _cprintf("####         ####");
-			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop()-1); _cprintf(" ####       #### ");
+			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop() - 5); _cprintf("    #########    ");
+			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop() - 4); _cprintf(" ####       #### ");
+			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop() - 3); _cprintf("####         ####");
+			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop() - 2); _cprintf("####         ####");
+			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop() - 1); _cprintf(" ####       #### ");
 			_Common::gotoXY(_b->getLeft() * 4 + 12, _b->getTop());   _cprintf("    #########    ");
-			_Common::gotoXY(_b->getLeft() * 4 +1, _b->getTop() + 2);  _cprintf("####       #### ##### #### ##     ####");
+			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 2);  _cprintf("####       #### ##### #### ##     ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 3); _cprintf("####       ####  ###  ####  ##    ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 4); _cprintf("####       ####  ###  ####   ##   ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 5); _cprintf("####  ###  ####  ###  ####    ##  ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 6); _cprintf("#### ## ## #### ##### ####     ## ####");
 			Sleep(60);
-		} while (i<15);
+		} while (i < 15);
 		PlaySound(TEXT("votay.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		break;
 	case 0:
@@ -232,9 +233,9 @@ int _Game::processFinish() {
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 5); _cprintf("####      ####  #### ####  ####       ####");
 			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 6); _cprintf("####      ####    #####   ####         ####");
 			Sleep(60);
-		} while (i<15);
+		} while (i < 15);
 		PlaySound(TEXT("votay.wav"), NULL, SND_ASYNC | SND_FILENAME);
-		break;	
+		break;
 	case 2:
 		_turn = !_turn;
 		break;
@@ -242,7 +243,42 @@ int _Game::processFinish() {
 	_Common::gotoXY(_x, _y);
 	return pWhoWin;
 }
-
+void _Game::help() {
+	_b->drawFrames();
+	_Common::gotoXY(_b->getLeft() + 30, _b->getTop());
+	cout << "Instruction";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 2);
+	cout << "w: Move up";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 3);
+	cout << "s: Move down";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 4);
+	cout << "a: Move left";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 5);
+	cout << "d: Move right";
+	_Common::gotoXY(_b->getLeft() + 40, _b->getTop() + 2);
+	cout << "arrow up: Move up";
+	_Common::gotoXY(_b->getLeft() + 40, _b->getTop() + 3);
+	cout << "arrow down: Move down";
+	_Common::gotoXY(_b->getLeft() + 40, _b->getTop() + 4);
+	cout << "arrow left: Move left";
+	_Common::gotoXY(_b->getLeft() + 40, _b->getTop() + 5);
+	cout << "arrow right: Move right";
+	_Common::gotoXY(_b->getLeft() + 30, _b->getTop() + 7);
+	cout << "enter: choose";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 9);
+	cout << "Rule:";
+	_Common::gotoXY(_b->getLeft() + 22, _b->getTop() + 10);
+	cout << "- Move and choose the position you want then take turn";
+	_Common::gotoXY(_b->getLeft() + 22, _b->getTop() + 11);
+	cout << "- The game end if appear five similar continuous point ";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 12);
+	cout << "Note: Press Esc if you want to leave the game";
+	_Common::gotoXY(_b->getLeft() + 20, _b->getTop() + 14);
+	cout << "Press any key to continue";
+	_getwch();
+	system("cls");
+	play();
+}
 void _Game::moveLeft() {
 	if (_x > _b->getXAt(0, 0)) {
 		_x -= 4;
@@ -251,7 +287,7 @@ void _Game::moveLeft() {
 }
 
 void _Game::moveRight() {
-	if (_x < _b->getXAt(_b->getSize()-1,_b->getSize()-1)) {
+	if (_x < _b->getXAt(_b->getSize() - 1, _b->getSize() - 1)) {
 		_x += 4;
 		_Common::gotoXY(_x, _y);
 	}
@@ -270,34 +306,104 @@ void _Game::moveUp() {
 	}
 }
 
+void _Game::botPlay() {
+	_Board::move nextMove = _b->findBestMove();
+	_x = nextMove.x;
+	_y = nextMove.y;
+	_Common::gotoXY(_x,_y);
+	_command = 13;
+	if (getCommand() == 13) {
+		if (processCheckBoard()) {
+			switch (processFinish()) {
+			case 1: case -1: case 0:
+				if (askContinue() != 'Y') exitGame();
+				else startGame();
+				break;
+			}
+		}
+	}
+
+}
+void _Game::moveAndChoose() {
+	waitKeyBoard();
+	if (getCommand() == 27) {
+		if (askSave() == 'Y') {
+			saveGame();
+			exitGame();
+		}
+		else exitGame();
+	}
+	else {
+		switch (getCommand()) {
+		case 65:case 75:
+			moveLeft();
+			break;
+		case 87:case 72:
+			moveUp();
+			break;
+		case 68:case 77:
+			moveRight();
+			break;
+		case 83:case 80:
+			moveDown();
+			break;
+		case 13:
+			if (processCheckBoard()) {
+				switch (processFinish()) {
+				case 1: case -1: case 0:
+					if (askContinue() != 'Y') exitGame();
+					else startGame();
+					break;
+				}
+			}
+			break;
+		}
+	}
+}
+void _Game::humanPlay() {
+	waitKeyBoard();
+	if (getCommand() == 27) {
+		if (askSave() == 'Y') {
+			saveGame();
+			exitGame();
+		}
+		else exitGame();
+	}
+	else {
+		switch (getCommand()) {
+		case 65:case 75:
+			moveLeft();
+			break;
+		case 87:case 72:
+			moveUp();
+			break;
+		case 68:case 77:
+			moveRight();
+			break;
+		case 83:case 80:
+			moveDown();
+			break;
+		}
+	}
+}
 void _Game::play() {
 	switch (_b->drawInterface()) {
 	case 13:
-		startGame();
-		while (isContinue()) {
-			waitKeyBoard();
-			if (getCommand() == 27) {
-				if (askSave() == 'Y') {
-					saveGame();
-					exitGame();
+		int turn;
+		_b->TextColor(12);
+		cout << "Press  1 to play with bot, 2 to play two people:";
+		cin >> turn;
+		switch (turn) {
+		case 1:
+			startGame();
+			while (isContinue()) {
+				botPlay();
+				humanPlay();
+				while (getCommand() != 13) {
+					humanPlay();
 				}
-				else exitGame();
-			}
-			else {
-				switch (getCommand()) {
-				case 65:case 75:
-					moveLeft();
-					break;
-				case 87:case 72:
-					moveUp();
-					break;
-				case 68:case 77:
-					moveRight();
-					break;
-				case 83:case 80:
-					moveDown();
-					break;
-				case 13:
+				if (getCommand() == 13)
+				{
 					if (processCheckBoard()) {
 						switch (processFinish()) {
 						case 1: case -1: case 0:
@@ -306,13 +412,58 @@ void _Game::play() {
 							break;
 						}
 					}
-					break;
 				}
 			}
+			break;
+		case 2:
+			startGame();
+			while (isContinue()) {
+				waitKeyBoard();
+				if (getCommand() == 27) {
+					if (askSave() == 'Y') {
+						saveGame();
+						exitGame();
+					}
+					else exitGame();
+				}
+				else {
+					switch (getCommand()) {
+					case 65:case 75:
+						moveLeft();
+						break;
+					case 87:case 72:
+						moveUp();
+						break;
+					case 68:case 77:
+						moveRight();
+						break;
+					case 83:case 80:
+						moveDown();
+						break;
+					case 13:
+						if (processCheckBoard()) {
+							switch (processFinish()) {
+							case 1: case -1: case 0:
+								if (askContinue() != 'Y') exitGame();
+								else startGame();
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			break;
 		}
 		break;
 	case 14:
 		playAfterLoad();
+		break;
+	case 15:
+		help();
+		break;
+	case 16:
+		exitGame();
 		break;
 	}
 }

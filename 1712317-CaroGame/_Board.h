@@ -5,7 +5,10 @@
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
+#include<time.h>
+#include<string>
 using namespace std;
+
 class _Board {
 private:
 	int _size;
@@ -13,6 +16,10 @@ private:
 	int _top;
 	_Point** _pArr;
 public:
+	struct move {
+		int x;
+		int y;
+	};
 	int getCheckAt(int, int);
 	int getSize();
 	int getLeft();
@@ -33,6 +40,13 @@ public:
 		HANDLE mau = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(mau, x);
 	}
+	int findmax(int, int);
+	int findmin(int, int);
 	void drawFrames();
 	int drawInterface();
+	bool isMoveLetf();
+	int evaluate();
+	int minimax(int, bool);
+	move findBestMove();
+	//void botPlay();
 };

@@ -453,3 +453,102 @@ int _Board::drawInterface() {
 	system("cls");
 	return toado;
 }
+
+
+bool _Board::isMoveLetf() {
+	for ( int i = 0;  i <_size; i++)
+	{
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetCheck() == 0)
+				return true;
+		}
+	}
+	return false;
+}
+int _Board::evaluate() {
+	for (int i = 0; i < _size; i++)
+	{
+		for (int j = 0; j < _size; j++)
+		{
+			if (testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == -1) {
+				return +10;
+			}
+			if(testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == 1)
+				return  -10;
+		}
+	}
+    return 0;
+}
+int _Board::findmax(int a, int b) {
+	return a > b ? a : b;
+}
+int _Board::findmin(int a, int b) {
+	return a < b ? a : b;
+}
+int _Board::minimax(int depth, bool isMax) {
+	int score = evaluate();
+	if (score == 10) {
+		return 10;
+	}
+	if (score == -10) {
+		return -10;
+	}
+	if (isMoveLetf() == false) return 0;
+	if (isMax) {
+		int best = -100000;
+		for (int i = 0; i < _size; i++)
+		{
+			for (int j = 0; j < _size; j++)
+			{
+				if (_pArr[i][j].GetCheck() == 0) {
+					_pArr[i][j].setCheck(-1);
+					/*_Common::gotoXY(getXAt(i, j), getYAt(i, j));
+					cout << player;*/
+					best = findmax(best, minimax(depth + 1, !isMax));
+					_pArr[i][j].setCheck(0);
+				}
+			}
+		}
+		return best;
+	}
+	else {
+		int best = 100000;
+		for (int i = 0; i < _size; i++) {
+			for (int j = 0; j < _size; j++)
+			{
+				if (_pArr[i][j].GetCheck() == 0 ) {
+					_pArr[i][j].setCheck(1);
+					//_Common::gotoXY(getXAt(i, j), getYAt(i, j));
+					//cout << opponent;
+					best = findmin(best, minimax(depth + 1, !isMax));
+					_pArr[i][j].setCheck(0);
+				}
+			}
+		}
+		return best;
+	}
+}
+_Board::move _Board::findBestMove() {
+	int bestVal = -100000;
+	move bestMove;
+	bestMove.x = -1;
+	bestMove.y = -1;
+	for (int i = 0; i < _size; i++)
+	{
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetCheck() == 0) {
+				_pArr[i][j].setCheck(-1);
+				int moveVal = minimax(0, false);
+				_pArr[i][j].setCheck(0);
+				if (moveVal > bestVal) {
+					bestMove.x = _pArr[i][j].GetX();
+					bestMove.y = _pArr[i][j].GetY();
+					bestVal = moveVal;
+				}
+			}
+		}
+	}
+	return bestMove;
+}

@@ -1,0 +1,10 @@
+﻿  1712317-CaroGame.cpp
+  _Board.cpp
+c:\users\võđứcdân\source\repos\bài nộp\1712317-carogame - copy\1712317-carogame\_board.cpp(99): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\võđứcdân\source\repos\bài nộp\1712317-carogame - copy\1712317-carogame\_board.cpp(435): warning C4474: 'printf' : too many arguments passed for format string
+  c:\users\võđứcdân\source\repos\bài nộp\1712317-carogame - copy\1712317-carogame\_board.cpp(435): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+c:\users\võđứcdân\source\repos\bài nộp\1712317-carogame - copy\1712317-carogame\_board.cpp(446): warning C4474: 'printf' : too many arguments passed for format string
+  c:\users\võđứcdân\source\repos\bài nộp\1712317-carogame - copy\1712317-carogame\_board.cpp(446): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+  _Game.cpp
+  Generating Code...
+  1712317-CaroGame.vcxproj -> C:\Users\VÕĐỨCDÂN\source\repos\Bài nộp\1712317-CaroGame - Copy\x64\Debug\1712317-CaroGame.exe
