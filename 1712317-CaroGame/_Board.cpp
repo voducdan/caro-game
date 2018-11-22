@@ -471,6 +471,7 @@ int _Board::evaluate() {
 	{
 		for (int j = 0; j < _size; j++)
 		{
+			cout << _pArr[i][j].GetX() << "," << _pArr[i][j].GetY() << endl;
 			if (testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == -1) {
 				return +10;
 			}
