@@ -7,6 +7,7 @@
 #include<Windows.h>
 #include<time.h>
 #include<string>
+#include<vector>
 using namespace std;
 
 class _Board {
@@ -46,7 +47,17 @@ public:
 	int drawInterface();
 	bool isMoveLetf();
 	int evaluate();
-	int minimax(int, bool);
+	int minimax(_Point,int, bool,int,int);
+	double tancongngang(int, int);
+	double tancongdoc(int, int);
+	double tancongcheoxuoi(int, int);
+	double tancongcheonguoc(int, int);
+	double phongngungang(int, int);
+	int sonuocdadi();
+	double phongngudoc(int, int);
+	double phongngucheonguoc(int, int);
+	double phongngucheoxuoi(int, int);
+	move timkiemnuocdi();
 	move findBestMove();
 	//void botPlay();
 };

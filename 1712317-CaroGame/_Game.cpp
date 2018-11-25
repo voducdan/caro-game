@@ -227,11 +227,11 @@ int _Game::processFinish() {
 	case 0:
 		do {
 			_Board::TextColor(i++);
-			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 2); _cprintf("####      ####    #####       #### ####");
-			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 3); _cprintf("####      ####  #### ####    ####   #### ");
-			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 4); _cprintf("#### #### #### ####   ####  #### ### ####");
-			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 5); _cprintf("####      ####  #### ####  ####       ####");
-			_Common::gotoXY(_b->getLeft() * 4 + 1, _b->getTop() + 6); _cprintf("####      ####    #####   ####         ####");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 2); _cprintf("####      ####    #####      ### ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 3); _cprintf("####      ####  #### ####   ###   ### ");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 4); _cprintf("#### #### #### ####   #### ### ### ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 5); _cprintf("####      ####  #### #### ###       ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 6); _cprintf("####      ####    #####  ###         ###");
 			Sleep(60);
 		} while (i < 15);
 		PlaySound(TEXT("votay.wav"), NULL, SND_ASYNC | SND_FILENAME);
@@ -307,9 +307,20 @@ void _Game::moveUp() {
 }
 
 void _Game::botPlay() {
-	_Board::move nextMove = _b->findBestMove();
-	_x = nextMove.x;
-	_y = nextMove.y;
+	_Board::move nextMove;
+	if (_b->sonuocdadi() == 0) {
+		_x= _b->getLeft() + _b->getSize() * 4 / 2 + 2;
+		_y = _b->getTop() + _b->getSize() * 2 / 2 + 1;
+		//_x = 22;
+		//_y = 7;
+	}
+	else {
+		nextMove = _b->timkiemnuocdi();
+		//board[ai_move.second.first][ai_move.second.second] = AI_MARKER;
+		//_Board::move nextMove = _b->findBestMove();
+		_x = nextMove.x;
+		_y = nextMove.y;
+	}
 	_Common::gotoXY(_x,_y);
 	_command = 13;
 	if (getCommand() == 13) {
@@ -322,7 +333,6 @@ void _Game::botPlay() {
 			}
 		}
 	}
-
 }
 void _Game::moveAndChoose() {
 	waitKeyBoard();
@@ -352,7 +362,11 @@ void _Game::moveAndChoose() {
 				switch (processFinish()) {
 				case 1: case -1: case 0:
 					if (askContinue() != 'Y') exitGame();
-					else startGame();
+					else {
+						_Board::countO = 0;
+						_Board::countX = 0;
+						startGame();
+					}
 					break;
 				}
 			}
@@ -408,7 +422,11 @@ void _Game::play() {
 						switch (processFinish()) {
 						case 1: case -1: case 0:
 							if (askContinue() != 'Y') exitGame();
-							else startGame();
+							else {
+								_Board::countO = 0;
+								_Board::countX = 0;
+								startGame();
+							}
 							break;
 						}
 					}
@@ -445,7 +463,11 @@ void _Game::play() {
 							switch (processFinish()) {
 							case 1: case -1: case 0:
 								if (askContinue() != 'Y') exitGame();
-								else startGame();
+								else {
+									_Board::countO = 0;
+									_Board::countX = 0;
+									startGame();
+								}
 								break;
 							}
 						}

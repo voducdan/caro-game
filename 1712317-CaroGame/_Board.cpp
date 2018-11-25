@@ -12,7 +12,7 @@ int _Board::getYAt(int i, int j) {
 int _Board::getCheckAt(int i, int j) {
 	return _pArr[i][j].GetCheck();
 }
-void _Board::setCheckAt(int i, int j,int value) {
+void _Board::setCheckAt(int i, int j, int value) {
 	_pArr[i][j].setCheck(value);
 }
 _Board::_Board(int size, int x, int y) {
@@ -51,32 +51,32 @@ void _Board::drawBoard() {
 	//}
 
 	_Common::gotoXY(_pArr[0][0].GetX(), _pArr[0][0].GetY());
-	
+
 	//ban co
 	//ngang
-	for (int i = _left+1; i <= _left + 4 * _size; i++)
+	for (int i = _left + 1; i <= _left + 4 * _size; i++)
 	{
 		TextColor(15);
 		_Common::_Common::gotoXY(i, _top); printf("%c", 196);
 		Sleep(1);
 	}
-	for (int i = _left+1; i <= _left + 4 * _size; i++)
+	for (int i = _left + 1; i <= _left + 4 * _size; i++)
 	{
 		TextColor(15);
-		_Common::_Common::gotoXY(i, _top+2*_size); printf("%c", 196);
+		_Common::_Common::gotoXY(i, _top + 2 * _size); printf("%c", 196);
 		Sleep(1);
 	}
-	for (int j = 2; j < 2*_size; j = j + 2) {
-		
+	for (int j = 2; j < 2 * _size; j = j + 2) {
+
 		for (int i = _left; i <= _left + 4 * _size; i++)
 		{
 			TextColor(15);
-			_Common::_Common::gotoXY(i, _top+j); printf("%c", 196);
+			_Common::_Common::gotoXY(i, _top + j); printf("%c", 196);
 			Sleep(1);
 		}
-		
+
 	}
-	
+
 	//doc
 	for (int i = _top + 1; i <= _top + 2 * _size - 1; i++)
 	{
@@ -85,13 +85,13 @@ void _Board::drawBoard() {
 		Sleep(1);
 
 	}
-	for (int i = _top + 1; i <= _top + 2 * _size-1; i++)
+	for (int i = _top + 1; i <= _top + 2 * _size - 1; i++)
 	{
 		TextColor(15);
-		_Common::_Common::gotoXY(_left+4*_size, i); printf("%c", 179);
+		_Common::_Common::gotoXY(_left + 4 * _size, i); printf("%c", 179);
 		Sleep(1);
 	}
-	for (size_t j = 4; j < 4*_size; j=j+4)
+	for (size_t j = 4; j < 4 * _size; j = j + 4)
 	{
 		for (int i = _top + 1; i <= _top + 2 * _size - 1; i++)
 		{
@@ -101,9 +101,9 @@ void _Board::drawBoard() {
 		}
 	}
 	_Common::_Common::gotoXY(_left, _top); printf("%c", 218);
-	_Common::_Common::gotoXY(_left, _top + 2*_size); printf("%c", 192);
-	_Common::_Common::gotoXY(_left+4*_size, _top); printf("%c", 191);
-	_Common::_Common::gotoXY(_left+4*_size, _top+2*_size); printf("%c", 217);
+	_Common::_Common::gotoXY(_left, _top + 2 * _size); printf("%c", 192);
+	_Common::_Common::gotoXY(_left + 4 * _size, _top); printf("%c", 191);
+	_Common::_Common::gotoXY(_left + 4 * _size, _top + 2 * _size); printf("%c", 217);
 
 
 	//khung 
@@ -203,9 +203,9 @@ int _Board::checkBoard(int x, int y, int turn) {
 
 			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y && _pArr[i][j].GetCheck() == 0) {
 				if (turn)
-				{	
+				{
 					countX++;
-					_Common::_Common::gotoXY(7,3);
+					_Common::_Common::gotoXY(7, 3);
 					cout << countX;
 					_Common::_Common::gotoXY(71, 3);
 					cout << "O";
@@ -239,19 +239,19 @@ int _Board::testBoard(int x, int y) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
 						break;
 					};
 				}
-				for (int t = i+1; t <_size; t++) {
+				for (int t = i + 1; t < _size; t++) {
 					if (_pArr[t][j].GetCheck() == _pArr[i][j].GetCheck()) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
@@ -265,7 +265,7 @@ int _Board::testBoard(int x, int y) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
@@ -277,7 +277,7 @@ int _Board::testBoard(int x, int y) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
@@ -286,24 +286,24 @@ int _Board::testBoard(int x, int y) {
 				}
 				// an cheo xuoi
 				count = 1;
-				for (int t = 1; t <=i&&t+j<_size; t++) {
-					if (_pArr[i-t][j+t].GetCheck() == _pArr[i][j].GetCheck()) {
+				for (int t = 1; t <= i && t + j < _size; t++) {
+					if (_pArr[i - t][j + t].GetCheck() == _pArr[i][j].GetCheck()) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
 						break;
 					};
 				}
-				for (int t = 1; t <=j&&t+i<_size; t++) {
-					if (_pArr[i+t][j-t].GetCheck() == _pArr[i][j].GetCheck()) {
+				for (int t = 1; t <= j && t + i < _size; t++) {
+					if (_pArr[i + t][j - t].GetCheck() == _pArr[i][j].GetCheck()) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
@@ -312,24 +312,24 @@ int _Board::testBoard(int x, int y) {
 				}
 				// an cheo nguoc
 				count = 1;
-				for (int t = 1; t <= i&&t<=j; t++) {
+				for (int t = 1; t <= i && t <= j; t++) {
 					if (_pArr[i - t][j - t].GetCheck() == _pArr[i][j].GetCheck()) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
 						break;
 					};
 				}
-				for (int t = 1; t+i<_size&&t+j<_size; t++) {
+				for (int t = 1; t + i < _size&&t + j < _size; t++) {
 					if (_pArr[i + t][j + t].GetCheck() == _pArr[i][j].GetCheck()) {
 						count++;
 						if (count == 5) {
 							if (_pArr[i][j].GetCheck() == -1) return -1;
-							else return 1;
+							if (_pArr[i][j].GetCheck() == 1) return 1;
 						}
 					}
 					else {
@@ -456,30 +456,30 @@ int _Board::drawInterface() {
 
 
 bool _Board::isMoveLetf() {
-	for ( int i = 0;  i <_size; i++)
+	for (int i = 0; i < _size; i++)
 	{
 		for (int j = 0; j < _size; j++)
 		{
 			if (_pArr[i][j].GetCheck() == 0)
-				return true;
+				return false;
 		}
 	}
-	return false;
+	return true;
 }
 int _Board::evaluate() {
 	for (int i = 0; i < _size; i++)
 	{
 		for (int j = 0; j < _size; j++)
 		{
-			cout << _pArr[i][j].GetX() << "," << _pArr[i][j].GetY() << endl;
+			//cout << _pArr[i][j].GetX() << "," << _pArr[i][j].GetY() << endl;
 			if (testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == -1) {
 				return +10;
 			}
-			if(testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == 1)
+			if (testBoard(_pArr[i][j].GetX(), _pArr[i][j].GetY()) == 1)
 				return  -10;
 		}
 	}
-    return 0;
+	return 0;
 }
 int _Board::findmax(int a, int b) {
 	return a > b ? a : b;
@@ -487,69 +487,506 @@ int _Board::findmax(int a, int b) {
 int _Board::findmin(int a, int b) {
 	return a < b ? a : b;
 }
-int _Board::minimax(int depth, bool isMax) {
+int _Board::minimax(_Point p, int depth, bool isMax, int alpha, int beta) {
 	int score = evaluate();
-	if (score == 10) {
-		return 10;
-	}
-	if (score == -10) {
-		return -10;
-	}
-	if (isMoveLetf() == false) return 0;
+	if (score == 10)
+		return score - depth;
+	if (score == -10)
+		return score + depth;
+	if (isMoveLetf())
+		return 0;
 	if (isMax) {
-		int best = -100000;
-		for (int i = 0; i < _size; i++)
-		{
-			for (int j = 0; j < _size; j++)
-			{
+		int bestVal = -1000;
+		for (int i = 0; i < _size; i++) {
+			for (int j = 0; j < _size; j++) {
 				if (_pArr[i][j].GetCheck() == 0) {
 					_pArr[i][j].setCheck(-1);
-					/*_Common::gotoXY(getXAt(i, j), getYAt(i, j));
-					cout << player;*/
-					best = findmax(best, minimax(depth + 1, !isMax));
+					int val = minimax(_pArr[i][j], depth + 1, false, alpha, beta);
+					bestVal = findmax(bestVal, val);
+					alpha = findmax(bestVal, alpha);
+					//cout<<"In Max "<<bestVal<<endl;
+					//printBoard(board);
 					_pArr[i][j].setCheck(0);
+					if (beta <= alpha)
+						break;
 				}
+				if (beta <= alpha)
+					break;
 			}
 		}
-		return best;
+		return bestVal;
 	}
 	else {
-		int best = 100000;
+		int bestVal = 1000;
 		for (int i = 0; i < _size; i++) {
-			for (int j = 0; j < _size; j++)
-			{
-				if (_pArr[i][j].GetCheck() == 0 ) {
+			for (int j = 0; j < _size; j++) {
+				if (_pArr[i][j].GetCheck() == 0) {
 					_pArr[i][j].setCheck(1);
-					//_Common::gotoXY(getXAt(i, j), getYAt(i, j));
-					//cout << opponent;
-					best = findmin(best, minimax(depth + 1, !isMax));
+					int val = minimax(_pArr[i][j], depth + 1, true, alpha, beta);
+					bestVal = findmin(bestVal, val);
+					beta = findmin(bestVal, beta);
 					_pArr[i][j].setCheck(0);
+					//cout<<"In Min "<<bestVal<<endl;
+					//printBoard(board);
+					if (beta <= alpha)
+						break;
 				}
+				if (beta <= alpha)
+					break;
 			}
 		}
-		return best;
+		return bestVal;
 	}
 }
-_Board::move _Board::findBestMove() {
-	int bestVal = -100000;
-	move bestMove;
-	bestMove.x = -1;
-	bestMove.y = -1;
+
+double mangdiemtancong[7] = { 0,1,9,81,729,6561,59049 };
+double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
+double _Board::tancongdoc(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				// an doc
+				for (int t = 1; t < 7 && i - t >= 0; t++) {
+					if (_pArr[i - t][j].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i - t][j].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				for (int t = 1; t < 7 && i + t < _size; t++) {
+					if (_pArr[i + t][j].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i + t][j].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+	}
+	if (soquandich == 2)
+		return 0;
+	diemtong -= mangdiemphongngu[soquandich + 1];
+	diemtong += mangdiemtancong[soquanta];
+	return diemtong;
+}
+
+double _Board::tancongngang(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				// an doc
+				for (int t = 1; t < 7 && j - t >= 0; t++) {
+					if (_pArr[i][j-t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i][j-t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				for (int t = 1; t < 7 && j + t < _size; t++) {
+					if (_pArr[i][j+t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i][j+t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+	}
+	if (soquandich == 2)
+		return 0;
+	diemtong -= mangdiemphongngu[soquandich + 1];
+	diemtong += mangdiemtancong[soquanta];
+	return diemtong;
+}
+
+double _Board::tancongcheoxuoi(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				for (int t = 1; t < 7 && j - t >= 0&&i-t>=0; t++) {
+					if (_pArr[i - t][j-t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i - t][j-t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				for (int t = 1; t < 7 && i + t < _size&&j+t<_size; t++) {
+					if (_pArr[i + t][j+t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i + t][j+t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+			
+		}
+		if (flag == 1) break;
+	}
+	if (soquandich == 2)
+		return 0;
+	diemtong -= mangdiemphongngu[soquandich + 1];
+	diemtong += mangdiemtancong[soquanta];
+	return diemtong;
+}
+
+double _Board::tancongcheonguoc(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				for (int t = 1; t < 7 && j + t < _size && i - t >= 0; t++) {
+					if (_pArr[i - t][j + t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i - t][j + t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				for (int t = 1; t < 7 && i + t < _size&&j - t >=0; t++) {
+					if (_pArr[i + t][j - t].GetCheck() == -1) {
+						soquanta++;
+					}
+					else if (_pArr[i + t][j - t].GetCheck() == 1)
+					{
+						soquandich++;
+						break;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+
+	}
+	if (soquandich == 2)
+		return 0;
+	diemtong -= mangdiemphongngu[soquandich + 1];
+	diemtong += mangdiemtancong[soquanta];
+	return diemtong;
+}
+
+double _Board::phongngudoc(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				// an doc
+				for (int t = 1; t < 7 && i - t >= 0; t++) {
+					if (_pArr[i - t][j].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i - t][j].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				for (int t = 0; t < 6 && i + t < _size; t++) {
+					if (_pArr[i + t][j].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i + t][j].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+
+	}
+	if (soquanta == 2)
+		return 0;
+	//diemtong -= mangdiemtancong[soquanta];
+	diemtong += mangdiemphongngu[soquandich];
+	return diemtong;
+}
+
+double _Board::phongngungang(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				// an doc
+				for (int t = 1; t < 7 && j - t >= 0; t++) {
+					if (_pArr[i][j - t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i][j - t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				for (int t = 0; t < 6 && j + t < _size; t++) {
+					if (_pArr[i][j + t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i][j + t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+
+	}
+	if (soquanta == 2)
+		return 0;
+	//diemtong -= mangdiemtancong[soquanta];
+	diemtong += mangdiemphongngu[soquandich];
+	return diemtong;
+}
+
+double _Board::phongngucheoxuoi(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				for (int t = 1; t < 7 && j - t >= 0 && i - t >= 0; t++) {
+					if (_pArr[i - t][j - t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i - t][j - t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				for (int t = 0; t < 6 && i + t < _size&&j + t < _size; t++) {
+					if (_pArr[i + t][j + t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i + t][j + t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+
+	}
+	if (soquanta == 2)
+		return 0;
+	//diemtong -= mangdiemtancong[soquanta];
+	diemtong += mangdiemphongngu[soquandich];
+	return diemtong;
+}
+
+double _Board::phongngucheonguoc(int x, int y) {
+	int soquanta = 0;
+	int soquandich = 0;
+	double diemtong = 0;
+	int flag = 0;
+	for (int i = 0; i < _size; i++) {
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetX() == x && _pArr[i][j].GetY() == y)
+			{
+				for (int t = 1; t < 7 && j + t < _size && i - t >= 0; t++) {
+					if (_pArr[i - t][j + t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i - t][j + t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				for (int t = 1; t < 7 && i + t < _size&&j - t >= 0; t++) {
+					if (_pArr[i + t][j - t].GetCheck() == -1) {
+						soquanta++;
+						break;
+					}
+					else if (_pArr[i + t][j - t].GetCheck() == 1)
+					{
+						soquandich++;
+					}
+					else
+						break;
+				}
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1) break;
+	}
+	if (soquanta == 2)
+		return 0;
+	//diemtong -= mangdiemtancong[soquanta];
+	diemtong += mangdiemphongngu[soquandich];
+	return diemtong;
+}
+int _Board::sonuocdadi() {
+	int count = 0;
+	for (int i = 0; i < _size; i++)
+	{
+		for (int j = 0; j < _size; j++)
+		{
+			if (_pArr[i][j].GetCheck() != 0)
+				count++;
+		}
+	}
+	return count;
+}
+_Board::move _Board::timkiemnuocdi() {
+	move wayresult;
+	wayresult.x = -1;
+	wayresult.y = -1;
+	double diemMax = 0;
 	for (int i = 0; i < _size; i++)
 	{
 		for (int j = 0; j < _size; j++)
 		{
 			if (_pArr[i][j].GetCheck() == 0) {
-				_pArr[i][j].setCheck(-1);
-				int moveVal = minimax(0, false);
-				_pArr[i][j].setCheck(0);
-				if (moveVal > bestVal) {
-					bestMove.x = _pArr[i][j].GetX();
-					bestMove.y = _pArr[i][j].GetY();
-					bestVal = moveVal;
+
+				int x = _pArr[i][j].GetX();
+				int y = _pArr[i][j].GetY();
+				double diemtancong = tancongdoc(x, y) + tancongngang(x, y) + tancongcheoxuoi(x, y) + tancongcheonguoc(x, y);
+				double diemphongngu = phongngudoc(x, y) + phongngungang(x, y) + phongngucheoxuoi(x, y) + phongngucheonguoc(x, y);
+				double temp = diemtancong > diemphongngu ? diemtancong : diemphongngu;
+				if (diemMax < temp)
+				{
+					diemMax = temp;
+					wayresult.x = x;
+					wayresult.y = y;
+					//wayresult->setCheck(_pArr[i][j].GetCheck());
 				}
 			}
 		}
 	}
-	return bestMove;
+	return wayresult;
+}
+
+_Board::move  _Board::findBestMove() {
+	move p;
+	p = timkiemnuocdi();
+	return p;
+	//int bestVal = -1000;
+	//int alpha = -1000;
+	//int beta = 1000;
+	//for (int i = 0; i < _size; i++) {
+	//	for (int j = 0; j < _size; j++) {
+	//		if (_pArr[i][j].GetCheck() == 0) {
+	//			_pArr[i][j].setCheck(-1);
+	//			int moveVal = minimax(_pArr[i][j],0, false, alpha, beta);
+	//			_pArr[i][j].setCheck(0);
+	//			//cout <<i<<" "<<j<<" "<<moveVal<<endl;
+	//			if (moveVal > bestVal) {
+	//				bestMove.x = _pArr[i][j].GetX();
+	//				bestMove.y = _pArr[i][j].GetY();
+	//				bestVal = moveVal;
+	//			}
+	//		}
+	//	}
+	//}
+	//return bestMove;
 }
