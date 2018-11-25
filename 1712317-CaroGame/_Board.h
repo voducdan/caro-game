@@ -8,6 +8,10 @@
 #include<time.h>
 #include<string>
 #include<vector>
+#include <thread>
+#include <condition_variable>
+#include <mutex>
+
 using namespace std;
 
 class _Board {
@@ -59,5 +63,6 @@ public:
 	double phongngucheoxuoi(int, int);
 	move timkiemnuocdi();
 	move findBestMove();
+	int chooseMode();
 	//void botPlay();
 };

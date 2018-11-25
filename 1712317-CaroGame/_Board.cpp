@@ -108,56 +108,56 @@ void _Board::drawBoard() {
 
 	//khung 
 	TextColor(11);
-	for (int i = 0; i <= 78; i++)
+	for (int i = 0; i <= _left*2+_size*4; i++)
 	{
 		_Common::_Common::gotoXY(i, 0); printf("%c", 205);
 		Sleep(1);
 	}
-	for (int i = 0; i <= 78; i++)
+	for (int i = 0; i <= _left * 2 + _size * 4; i++)
 	{
-		_Common::_Common::gotoXY(i, 29); printf("%c", 205);
+		_Common::_Common::gotoXY(i, _top*2+_size*2); printf("%c", 205);
 		Sleep(1);
 	}
-	for (int i = 0; i <= 28; i++)
+	for (int i = 0; i <= _top * 2 + _size * 2 - 1; i++)
 	{
 		_Common::_Common::gotoXY(0, i); printf("%c", 186);
 		Sleep(1);
 	}
-	for (int i = 0; i <= 29; i++)
+	for (int i = 0; i <= _top * 2 + _size * 2; i++)
 	{
-		_Common::_Common::gotoXY(79, i); printf("%c", 186);
+		_Common::_Common::gotoXY(_left * 2 + _size * 4, i); printf("%c", 186);
 		Sleep(1);
 	}
 	_Common::_Common::gotoXY(0, 0); printf("%c", 201);
-	_Common::_Common::gotoXY(0, 29); printf("%c", 200);
-	_Common::_Common::gotoXY(79, 0); printf("%c", 187);
-	_Common::_Common::gotoXY(79, 29); printf("%c", 188);
+	_Common::_Common::gotoXY(0, _top * 2 + _size * 2); printf("%c", 200);
+	_Common::_Common::gotoXY(_left * 2 + _size * 4 , 0); printf("%c", 187);
+	_Common::_Common::gotoXY(_left * 2 + _size * 4 , _top * 2 + _size * 2); printf("%c", 188);
 
 	TextColor(11);
-	for (int i = 2; i <= 77; i++)
+	for (int i = 2; i <= _left * 2 + _size * 4 -1; i++)
 	{
 		_Common::_Common::gotoXY(i, 1); printf("%c", 205);
 		Sleep(1);
 	}
-	for (int i = 1; i <= 77; i++)
+	for (int i = 1; i <= _left * 2 + _size * 4 - 1; i++)
 	{
-		_Common::_Common::gotoXY(i, 28); printf("%c", 205);
+		_Common::_Common::gotoXY(i, _top * 2 + _size * 2 - 1); printf("%c", 205);
 		Sleep(1);
 	}
-	for (int i = 1; i <= 28; i++)
+	for (int i = 1; i <= _top * 2 + _size * 2 -1; i++)
 	{
 		_Common::_Common::gotoXY(1, i); printf("%c", 186);
 		Sleep(1);
 	}
-	for (int i = 1; i <= 27; i++)
+	for (int i = 1; i <= _top * 2 + _size * 2 - 1; i++)
 	{
-		_Common::_Common::gotoXY(78, i); printf("%c", 186);
+		_Common::_Common::gotoXY(_left * 2 + _size * 4 - 1, i); printf("%c", 186);
 		Sleep(1);
 	}
 	_Common::_Common::gotoXY(1, 1); printf("%c", 201);
-	_Common::_Common::gotoXY(1, 28); printf("%c", 200);
-	_Common::_Common::gotoXY(78, 1); printf("%c", 187);
-	_Common::_Common::gotoXY(78, 28); printf("%c", 188);
+	_Common::_Common::gotoXY(1, _top * 2 + _size * 2-1); printf("%c", 200);
+	_Common::_Common::gotoXY(_left * 2 + _size * 4 - 1, 1); printf("%c", 187);
+	_Common::_Common::gotoXY(_left * 2 + _size * 4 - 1, _top * 2 + _size * 2-1); printf("%c", 188);
 	for (int i = 0; i < 15; i++)
 	{
 		_Common::_Common::gotoXY(63 + i, 4); printf("%c", 205);
@@ -541,6 +541,7 @@ int _Board::minimax(_Point p, int depth, bool isMax, int alpha, int beta) {
 
 double mangdiemtancong[7] = { 0,1,9,81,729,6561,59049 };
 double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
+//double mangdiemphongngu[7] = { 0, 3, 27, 243, 2187, 19683, 177147 };
 double _Board::tancongdoc(int x, int y) {
 	int soquanta = 0;
 	int soquandich = 0;
@@ -756,7 +757,7 @@ double _Board::phongngudoc(int x, int y) {
 					else
 						break;
 				}
-				for (int t = 0; t < 6 && i + t < _size; t++) {
+				for (int t = 1; t < 7 && i + t < _size; t++) {
 					if (_pArr[i + t][j].GetCheck() == -1) {
 						soquanta++;
 						break;
@@ -805,7 +806,7 @@ double _Board::phongngungang(int x, int y) {
 					else
 						break;
 				}
-				for (int t = 0; t < 6 && j + t < _size; t++) {
+				for (int t = 1; t < 7 && j + t < _size; t++) {
 					if (_pArr[i][j + t].GetCheck() == -1) {
 						soquanta++;
 						break;
@@ -853,7 +854,7 @@ double _Board::phongngucheoxuoi(int x, int y) {
 					else
 						break;
 				}
-				for (int t = 0; t < 6 && i + t < _size&&j + t < _size; t++) {
+				for (int t = 1; t < 7 && i + t < _size&&j + t < _size; t++) {
 					if (_pArr[i + t][j + t].GetCheck() == -1) {
 						soquanta++;
 						break;
@@ -990,3 +991,46 @@ _Board::move  _Board::findBestMove() {
 	//}
 	//return bestMove;
 }
+
+int _Board::chooseMode() {
+	TextColor(14);
+	TextColor(202);
+	_Common::gotoXY(56, 13); printf("%c PLAYER vs BOT  ", 175);
+	TextColor(14);
+	_Common::gotoXY(58, 14); printf("PLAYER vs PLAYER");
+	int chon = 0;
+	int toado = 13;
+	do {
+		char a = _getch();
+		if (a == 80 || a == 's' || a == 'S' || a == '2') chon = 1;
+		else if (a == 72 || a == 'w' || a == 'W' || a == '8') chon = 2;
+		else if (a == 13 || a == 'e' || a == 'e' || a == '5') chon = 3;
+		else chon = 0;
+		if (chon == 1 && toado <= 14) toado++;
+		if (chon == 2 && toado >= 13) toado--;
+		if (chon == 1 && toado > 14) toado = 13;
+		if (chon == 2 && toado < 13) toado = 16;
+		if (toado == 13)
+		{
+			TextColor(202);
+			_Common::gotoXY(56, 13); printf("%c PLAYER VS BOT  ", 175);
+			TextColor(14);
+			_Common::gotoXY(56, 14); printf("  PLAYER VS PLAYER         ");
+			TextColor(0);
+		}
+
+		if (toado == 14)
+		{
+			TextColor(14);
+			_Common::gotoXY(56, 13); printf("  PLAYER VS BOT    ");
+			TextColor(202);
+			_Common::gotoXY(56, 14); printf("%c PLAYER VS PLAYER       ", 175);
+			TextColor(14);
+			TextColor(0);
+		}
+	} while (chon != 3);
+	system("cls");
+	return toado;
+}
+
+

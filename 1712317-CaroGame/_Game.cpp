@@ -167,6 +167,31 @@ void _Game::playAfterLoad() {
 		}
 	}
 }
+void _Game::playafterloadvsbot() {
+	loadGame();
+	while (isContinue()) {
+		botPlay();
+		humanPlay();
+		while (getCommand() != 13) {
+			humanPlay();
+		}
+		if (getCommand() == 13)
+		{
+			if (processCheckBoard()) {
+				switch (processFinish()) {
+				case 1: case -1: case 0:
+					if (askContinue() != 'Y') exitGame();
+					else {
+						_Board::countO = 0;
+						_Board::countX = 0;
+						startGame();
+					}
+					break;
+				}
+			}
+		}
+	}
+}
 bool _Game::processCheckBoard() {
 	switch (_b->checkBoard(_x, _y, _turn)) {
 	case -1:
@@ -227,11 +252,11 @@ int _Game::processFinish() {
 	case 0:
 		do {
 			_Board::TextColor(i++);
-			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 2); _cprintf("####      ####    #####      ### ###");
-			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 3); _cprintf("####      ####  #### ####   ###   ### ");
-			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 4); _cprintf("#### #### #### ####   #### ### ### ###");
-			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 5); _cprintf("####      ####  #### #### ###       ###");
-			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 6); _cprintf("####      ####    #####  ###         ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 2); _cprintf("####    ####    #####      ### ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 3); _cprintf("####    ####  #### ####   ###   ### ");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 4); _cprintf("#### ## #### ####   #### ### ### ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 5); _cprintf("####    ####  #### #### ###       ###");
+			_Common::gotoXY(_b->getLeft() * 4 , _b->getTop() + 6); _cprintf("####    ####    #####  ###         ###");
 			Sleep(60);
 		} while (i < 15);
 		PlaySound(TEXT("votay.wav"), NULL, SND_ASYNC | SND_FILENAME);
@@ -400,41 +425,89 @@ void _Game::humanPlay() {
 		}
 	}
 }
+
+
+mutex mtx;
+condition_variable cv;
+int result = -1;
+void _Game::Timer() {
+
+	// Do something
+	// ....
+	// ....
+	int x = 0;
+	int sec = 0;
+	int min = 0;
+	int hour = 0;
+	while (x == 0) {
+		_b->TextColor(11);
+		_Common::gotoXY(35, 5);
+		cout << hour << ":" << min << ":" << sec;
+		sec++;
+		if (sec == 60)
+		{
+			x = 0;
+			min++;
+			if (min == 60) {
+				min = 0;
+				hour++;
+			}
+		}
+		Sleep(1000);
+	}
+	// got a result? publish it!
+	unique_lock<mutex> lck(mtx);
+	if (result != -1)
+		return; // there is already a result!
+
+	result = 0; // my result
+	cv.notify_one(); // say I am ready
+	
+}
+void _Game::playvsbot() {
+	startGame();
+	while (isContinue()) {
+		botPlay();
+		humanPlay();
+		while (getCommand() != 13) {
+			humanPlay();
+		}
+		if (getCommand() == 13)
+		{
+			if (processCheckBoard()) {
+				switch (processFinish()) {
+				case 1: case -1: case 0:
+					if (askContinue() != 'Y') exitGame();
+					else {
+						_Board::countO = 0;
+						_Board::countX = 0;
+						startGame();
+					}
+					break;
+				}
+			}
+		}
+	}
+	unique_lock<mutex> lck(mtx);
+	if (result != -1)
+		return; // there is already a result!
+
+	result = 1; // my result
+	cv.notify_one(); // say I am ready
+}
 void _Game::play() {
 	switch (_b->drawInterface()) {
 	case 13:
-		int turn;
-		_b->TextColor(12);
-		cout << "Press  1 to play with bot, 2 to play two people:";
-		cin >> turn;
-		switch (turn) {
-		case 1:
-			startGame();
-			while (isContinue()) {
-				botPlay();
-				humanPlay();
-				while (getCommand() != 13) {
-					humanPlay();
-				}
-				if (getCommand() == 13)
-				{
-					if (processCheckBoard()) {
-						switch (processFinish()) {
-						case 1: case -1: case 0:
-							if (askContinue() != 'Y') exitGame();
-							else {
-								_Board::countO = 0;
-								_Board::countX = 0;
-								startGame();
-							}
-							break;
-						}
-					}
-				}
-			}
+		//_b->TextColor(12);
+		switch (_b->chooseMode()) {
+		case 13:
+		{
+			playvsbot();
 			break;
-		case 2:
+		}
+		case 14: {
 			startGame();
+			//int flag = 0;
 			while (isContinue()) {
 				waitKeyBoard();
 				if (getCommand() == 27) {
@@ -462,6 +535,7 @@ void _Game::play() {
 						if (processCheckBoard()) {
 							switch (processFinish()) {
 							case 1: case -1: case 0:
+								//flag = 1;
 								if (askContinue() != 'Y') exitGame();
 								else {
 									_Board::countO = 0;
@@ -474,8 +548,11 @@ void _Game::play() {
 						break;
 					}
 				}
+				
 			}
+			
 			break;
+		}
 		}
 		break;
 	case 14:

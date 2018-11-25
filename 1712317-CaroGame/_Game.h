@@ -11,6 +11,9 @@
 #include<time.h>
 #include<string>
 #include<sstream>
+#include <thread>
+#include <condition_variable>
+#include <mutex>
 using namespace std;
 
 class _Game {
@@ -35,11 +38,14 @@ public:
 	void saveGame();
 	void loadGame();
 	void playAfterLoad();
+	void playafterloadvsbot();
 	void botPlay();
 	void humanPlay();
 	void help();
 	void play();
 	void moveAndChoose();
+	void Timer();
+	void playvsbot();
 public:
 	int processFinish();
 	bool processCheckBoard();
