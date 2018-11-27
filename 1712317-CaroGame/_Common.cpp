@@ -1,5 +1,5 @@
 #include"_Common.h"
-
+#include"pch.h"
 void _Common::gotoXY(int pX,int pY) {
 	COORD coord;
 	coord.X = pX;

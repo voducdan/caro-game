@@ -1,5 +1,5 @@
+#include"pch.h"
 #include"_Board.h"
-
 int _Board::getSize() { return _size; }
 int _Board::getLeft() { return _left; }
 int _Board::getTop() { return _top; }
@@ -540,8 +540,8 @@ int _Board::minimax(_Point p, int depth, bool isMax, int alpha, int beta) {
 }
 
 double mangdiemtancong[7] = { 0,1,9,81,729,6561,59049 };
-double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
-//double mangdiemphongngu[7] = { 0, 3, 27, 243, 2187, 19683, 177147 };
+//double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
+double mangdiemphongngu[7] = { 0, 1, 8, 64, 512, 4096, 32768 };
 double _Board::tancongdoc(int x, int y) {
 	int soquanta = 0;
 	int soquandich = 0;

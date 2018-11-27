@@ -1,3 +1,4 @@
+#include"pch.h"
 #include"_Point.h"
 
 _Point::_Point() {

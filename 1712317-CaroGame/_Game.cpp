@@ -1,3 +1,4 @@
+#include"pch.h"
 #include"_Game.h"
 _Game::_Game(int size, int left, int top) {
 	_b = new _Board(size, left, top);
@@ -18,9 +19,9 @@ char _Game::waitKeyBoard() {
 	return _command;
 }
 char _Game::askContinue() {
-	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 2);
-	cout << "Do you want to play again? ";
-	_Common::gotoXY(_b->getLeft() + 5, _b->getTop() - 1);
+	_Common::gotoXY(_b->getLeft()-8, _b->getTop() - 1);
+	cout << "Press 1 to play again, 2 to return main control, else to exit ";
+	_Common::gotoXY(_b->getLeft() + 54, _b->getTop() - 1);
 	waitKeyBoard();
 	return getCommand();
 }
@@ -42,7 +43,6 @@ char _Game::askSave() {
 	waitKeyBoard();
 	return getCommand();
 }
-
 
 void _Game::saveGame() {
 	char name[30];
@@ -352,8 +352,14 @@ void _Game::botPlay() {
 		if (processCheckBoard()) {
 			switch (processFinish()) {
 			case 1: case -1: case 0:
-				if (askContinue() != 'Y') exitGame();
-				else startGame();
+				char ask = askContinue();
+				if (ask == '2') play();
+				else if (ask == '1') {
+					_Board::countO = 0;
+					_Board::countX = 0;
+					playvsbot();
+				}
+				else exitGame();
 				break;
 			}
 		}
@@ -465,6 +471,7 @@ void _Game::Timer() {
 	
 }
 void _Game::playvsbot() {
+	system("cls");
 	startGame();
 	while (isContinue()) {
 		botPlay();
@@ -477,12 +484,14 @@ void _Game::playvsbot() {
 			if (processCheckBoard()) {
 				switch (processFinish()) {
 				case 1: case -1: case 0:
-					if (askContinue() != 'Y') exitGame();
-					else {
+					char ask = askContinue();
+					if (ask == '2') play();
+					else if (ask == '1') {
 						_Board::countO = 0;
 						_Board::countX = 0;
-						startGame();
+						playvsbot();
 					}
+					else exitGame();
 					break;
 				}
 			}
@@ -496,6 +505,7 @@ void _Game::playvsbot() {
 	cv.notify_one(); // say I am ready
 }
 void _Game::play() {
+	system("cls");
 	switch (_b->drawInterface()) {
 	case 13:
 		//_b->TextColor(12);
@@ -536,12 +546,14 @@ void _Game::play() {
 							switch (processFinish()) {
 							case 1: case -1: case 0:
 								//flag = 1;
-								if (askContinue() != 'Y') exitGame();
-								else {
+								char ask = askContinue();
+								if (ask == '2') play();
+								else if(ask=='1'){
 									_Board::countO = 0;
 									_Board::countX = 0;
 									startGame();
 								}
+								else exitGame();
 								break;
 							}
 						}
