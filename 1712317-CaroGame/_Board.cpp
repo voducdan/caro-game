@@ -540,8 +540,9 @@ int _Board::minimax(_Point p, int depth, bool isMax, int alpha, int beta) {
 }
 
 double mangdiemtancong[7] = { 0,1,9,81,729,6561,59049 };
-//double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
-double mangdiemphongngu[7] = { 0, 1, 8, 64, 512, 4096, 32768 };
+//double mangdiemtancong[7] = { 0,9,72,432,2589,15552 ,93312};
+double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
+//double mangdiemphongngu[7] = { 0, 1, 8, 64, 512, 4096, 32768 };
 double _Board::tancongdoc(int x, int y) {
 	int soquanta = 0;
 	int soquandich = 0;
