@@ -540,7 +540,7 @@ int _Board::minimax(_Point p, int depth, bool isMax, int alpha, int beta) {
 }
 
 double mangdiemtancong[7] = { 0,1,9,81,729,6561,59049 };
-//double mangdiemtancong[7] = { 0,9,72,432,2589,15552 ,93312};
+//double mangdiemtancong[7] = { 0,8,100,1535,12287,15552 ,93312};
 double mangdiemphongngu[7] = { 0, 3, 24, 192, 1536, 12288, 98034 };
 //double mangdiemphongngu[7] = { 0, 1, 8, 64, 512, 4096, 32768 };
 double _Board::tancongdoc(int x, int y) {
@@ -557,26 +557,40 @@ double _Board::tancongdoc(int x, int y) {
 				for (int t = 1; t < 7 && i - t >= 0; t++) {
 					if (_pArr[i - t][j].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && i - t - 1 == 0) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i - t][j].GetCheck() == 1)
 					{
 						soquandich++;
 						break;
 					}
 					else
+					{
 						break;
+					}
 				}
 				for (int t = 1; t < 7 && i + t < _size; t++) {
 					if (_pArr[i + t][j].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && i + t + 1 == _size - 1) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i + t][j].GetCheck() == 1)
 					{
 						soquandich++;
 						break;
 					}
 					else
+					{
 						break;
+					}
 				}
 				flag = 1;
 				break;
@@ -605,19 +619,31 @@ double _Board::tancongngang(int x, int y) {
 				for (int t = 1; t < 7 && j - t >= 0; t++) {
 					if (_pArr[i][j-t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && j - t - 1 == 0) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i][j-t].GetCheck() == 1)
 					{
 						soquandich++;
 						break;
 					}
 					else
+					{
 						break;
+					}
 				}
 				for (int t = 1; t < 7 && j + t < _size; t++) {
 					if (_pArr[i][j+t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && j + t + 1 == _size - 1) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i][j+t].GetCheck() == 1)
 					{
 						soquandich++;
@@ -652,7 +678,12 @@ double _Board::tancongcheoxuoi(int x, int y) {
 				for (int t = 1; t < 7 && j - t >= 0&&i-t>=0; t++) {
 					if (_pArr[i - t][j-t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && (i - t - 1 == 0 || j - t - 1 == 0)) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i - t][j-t].GetCheck() == 1)
 					{
 						soquandich++;
@@ -664,7 +695,12 @@ double _Board::tancongcheoxuoi(int x, int y) {
 				for (int t = 1; t < 7 && i + t < _size&&j+t<_size; t++) {
 					if (_pArr[i + t][j+t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && (i + t + 1 == _size - 1 || j + t + 1 == _size - 1)) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i + t][j+t].GetCheck() == 1)
 					{
 						soquandich++;
@@ -700,7 +736,12 @@ double _Board::tancongcheonguoc(int x, int y) {
 				for (int t = 1; t < 7 && j + t < _size && i - t >= 0; t++) {
 					if (_pArr[i - t][j + t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && (i - t - 1 == 0 || j + t + 1 == _size - 1)) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i - t][j + t].GetCheck() == 1)
 					{
 						soquandich++;
@@ -712,7 +753,12 @@ double _Board::tancongcheonguoc(int x, int y) {
 				for (int t = 1; t < 7 && i + t < _size&&j - t >=0; t++) {
 					if (_pArr[i + t][j - t].GetCheck() == -1) {
 						soquanta++;
+						if (soquanta < 4 && (i + t + 1 == _size - 1 || j - t - 1 == 0)) {
+							soquanta = 0;
+							break;
+						}
 					}
+					
 					else if (_pArr[i + t][j - t].GetCheck() == 1)
 					{
 						soquandich++;
@@ -754,6 +800,10 @@ double _Board::phongngudoc(int x, int y) {
 					else if (_pArr[i - t][j].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && i - t - 1 == 0) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -766,6 +816,10 @@ double _Board::phongngudoc(int x, int y) {
 					else if (_pArr[i + t][j].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && i + t + 1 == _size - 1) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -779,7 +833,7 @@ double _Board::phongngudoc(int x, int y) {
 	}
 	if (soquanta == 2)
 		return 0;
-	//diemtong -= mangdiemtancong[soquanta];
+	diemtong -= mangdiemtancong[soquanta];
 	diemtong += mangdiemphongngu[soquandich];
 	return diemtong;
 }
@@ -803,6 +857,10 @@ double _Board::phongngungang(int x, int y) {
 					else if (_pArr[i][j - t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && j - t - 1 == 0) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -815,6 +873,10 @@ double _Board::phongngungang(int x, int y) {
 					else if (_pArr[i][j + t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && j + t + 1 == _size - 1) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -828,7 +890,7 @@ double _Board::phongngungang(int x, int y) {
 	}
 	if (soquanta == 2)
 		return 0;
-	//diemtong -= mangdiemtancong[soquanta];
+	diemtong -= mangdiemtancong[soquanta];
 	diemtong += mangdiemphongngu[soquandich];
 	return diemtong;
 }
@@ -851,6 +913,10 @@ double _Board::phongngucheoxuoi(int x, int y) {
 					else if (_pArr[i - t][j - t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 &&( i - t - 1 == 0|| j - t - 1==0)) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -863,6 +929,10 @@ double _Board::phongngucheoxuoi(int x, int y) {
 					else if (_pArr[i + t][j + t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && (i + t + 1 == _size - 1 || j + t + 1 == _size - 1)) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -876,7 +946,7 @@ double _Board::phongngucheoxuoi(int x, int y) {
 	}
 	if (soquanta == 2)
 		return 0;
-	//diemtong -= mangdiemtancong[soquanta];
+	diemtong -= mangdiemtancong[soquanta];
 	diemtong += mangdiemphongngu[soquandich];
 	return diemtong;
 }
@@ -899,6 +969,10 @@ double _Board::phongngucheonguoc(int x, int y) {
 					else if (_pArr[i - t][j + t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && (i - t - 1 == 0 || j + t + 1 == _size - 1)) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -911,6 +985,10 @@ double _Board::phongngucheonguoc(int x, int y) {
 					else if (_pArr[i + t][j - t].GetCheck() == 1)
 					{
 						soquandich++;
+						if (soquandich < 4 && (i + t + 1 == _size - 1 || j - t - 1 == 0)) {
+							soquandich = 0;
+							break;
+						}
 					}
 					else
 						break;
@@ -923,7 +1001,7 @@ double _Board::phongngucheonguoc(int x, int y) {
 	}
 	if (soquanta == 2)
 		return 0;
-	//diemtong -= mangdiemtancong[soquanta];
+	diemtong -= mangdiemtancong[soquanta];
 	diemtong += mangdiemphongngu[soquandich];
 	return diemtong;
 }
